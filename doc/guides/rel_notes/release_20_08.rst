@@ -61,6 +61,7 @@ New Features
   Updated PCAP driver with new features and improvements, including:
 
   * Support software Tx nanosecond timestamps precision.
+  * Support hardware Tx timestamps.
 
 * **Updated Mellanox mlx5 driver.**
 
