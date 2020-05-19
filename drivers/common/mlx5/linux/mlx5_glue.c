@@ -81,6 +81,20 @@ mlx5_glue_query_rt_values_ex(struct ibv_context *context,
 }
 
 static int
+mlx5_glue_get_clock_info(struct ibv_context *context,
+			  struct mlx5dv_clock_info *clock_info)
+{
+	return mlx5dv_get_clock_info(context, clock_info);
+}
+
+static uint64_t
+mlx5_glue_mlx5dv_ts_to_ns(struct mlx5dv_clock_info *clock_info,
+			  uint64_t device_timestamp)
+{
+	return mlx5dv_ts_to_ns(clock_info, device_timestamp);
+}
+
+static int
 mlx5_glue_query_port(struct ibv_context *context, uint8_t port_num,
 		     struct ibv_port_attr *port_attr)
 {
@@ -1207,6 +1221,8 @@ const struct mlx5_glue *mlx5_glue = &(const struct mlx5_glue) {
 	.query_device = mlx5_glue_query_device,
 	.query_device_ex = mlx5_glue_query_device_ex,
 	.query_rt_values_ex = mlx5_glue_query_rt_values_ex,
+	.get_clock_info = mlx5_glue_get_clock_info,
+	.convert_ts_to_ns = mlx5_glue_mlx5dv_ts_to_ns,
 	.query_port = mlx5_glue_query_port,
 	.create_comp_channel = mlx5_glue_create_comp_channel,
 	.destroy_comp_channel = mlx5_glue_destroy_comp_channel,

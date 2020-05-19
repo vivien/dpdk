@@ -123,6 +123,10 @@ struct mlx5_glue {
 			  struct ibv_port_attr *port_attr);
 	struct ibv_comp_channel *(*create_comp_channel)
 		(struct ibv_context *context);
+	int (*get_clock_info)(struct ibv_context *context,
+			       struct mlx5dv_clock_info *clock_info);
+	uint64_t (*convert_ts_to_ns)(struct mlx5dv_clock_info *clock_info,
+			  uint64_t device_timestamp);
 	int (*destroy_comp_channel)(struct ibv_comp_channel *channel);
 	struct ibv_cq *(*create_cq)(struct ibv_context *context, int cqe,
 				    void *cq_context,

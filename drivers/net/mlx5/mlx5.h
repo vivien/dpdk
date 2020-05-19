@@ -738,6 +738,7 @@ int mlx5_get_mtu(struct rte_eth_dev *dev, uint16_t *mtu);
 int mlx5_set_flags(struct rte_eth_dev *dev, unsigned int keep,
 		   unsigned int flags);
 int mlx5_set_mtu(struct rte_eth_dev *dev, uint16_t mtu);
+int mlx5_convert_ts_to_ns(struct rte_eth_dev *dev, uint64_t *timestamp);
 int mlx5_read_clock(struct rte_eth_dev *dev, uint64_t *clock);
 int mlx5_link_update(struct rte_eth_dev *dev, int wait_to_complete);
 int mlx5_force_link_status_change(struct rte_eth_dev *dev, int status);

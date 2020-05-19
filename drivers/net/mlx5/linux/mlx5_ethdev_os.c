@@ -356,6 +356,36 @@ mlx5_set_flags(struct rte_eth_dev *dev, unsigned int keep, unsigned int flags)
 }
 
 /**
+ * Convert raw clock counter to nanoseconds
+ *
+ * @param dev
+ *   Pointer to Ethernet device structure.
+ * @param[in&out] timestamp
+ *   Pointer to the timestamp to be converted.
+ *
+ * @return
+ *   0 if the clock has correctly been read
+ *   The value of errno in case of error
+ */
+int
+mlx5_convert_ts_to_ns(struct rte_eth_dev *dev, uint64_t *timestamp)
+{
+	struct mlx5_priv *priv = dev->data->dev_private;
+	struct ibv_context *ctx = priv->sh->ctx;
+	struct mlx5dv_clock_info clock_info;
+
+	int err = mlx5_glue->get_clock_info(ctx, &clock_info);
+	if (err != 0) {
+		DRV_LOG(WARNING, "Could not get the clock info!");
+		return err;
+	}
+
+	*timestamp = mlx5_glue->convert_ts_to_ns(&clock_info, *timestamp);
+
+	return err;
+}
+
+/**
  * Get device current raw clock counter
  *
  * @param dev

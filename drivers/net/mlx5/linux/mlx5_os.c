@@ -2408,6 +2408,7 @@ const struct eth_dev_ops mlx5_os_dev_sec_ops = {
 	.xstats_get_names = mlx5_xstats_get_names,
 	.fw_version_get = mlx5_fw_version_get,
 	.dev_infos_get = mlx5_dev_infos_get,
+	.convert_ts_to_ns = mlx5_convert_ts_to_ns,
 	.rx_descriptor_status = mlx5_rx_descriptor_status,
 	.tx_descriptor_status = mlx5_tx_descriptor_status,
 	.rxq_info_get = mlx5_rxq_info_get,
