@@ -100,12 +100,24 @@ pdump_copy(struct rte_mbuf **pkts, uint16_t nb_pkts, void *user_params)
 	}
 }
 
+static inline void
+pdump_ts_to_ns(uint16_t port_id, struct rte_mbuf **pkts, uint16_t nb_pkts)
+{
+	unsigned int i;
+
+	for (i = 0; i < nb_pkts; i++) {
+		if (pkts[i]->ol_flags & PKT_RX_TIMESTAMP)
+			rte_eth_convert_ts_to_ns(port_id, &pkts[i]->timestamp);
+	}
+}
+
 static uint16_t
-pdump_rx(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
+pdump_rx(uint16_t port_id, uint16_t qidx __rte_unused,
 	struct rte_mbuf **pkts, uint16_t nb_pkts,
 	uint16_t max_pkts __rte_unused,
 	void *user_params)
 {
+	pdump_ts_to_ns(port_id, pkts, nb_pkts);
 	pdump_copy(pkts, nb_pkts, user_params);
 	return nb_pkts;
 }

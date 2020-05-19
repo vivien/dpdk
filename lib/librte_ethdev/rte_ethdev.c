@@ -4811,6 +4811,18 @@ rte_eth_timesync_write_time(uint16_t port_id, const struct timespec *timestamp)
 }
 
 int
+rte_eth_convert_ts_to_ns(uint16_t port_id, uint64_t *timestamp)
+{
+	struct rte_eth_dev *dev;
+
+	RTE_ETH_VALID_PORTID_OR_ERR_RET(port_id, -ENODEV);
+	dev = &rte_eth_devices[port_id];
+
+	RTE_FUNC_PTR_OR_ERR_RET(*dev->dev_ops->convert_ts_to_ns, -ENOTSUP);
+	return eth_err(port_id, (*dev->dev_ops->convert_ts_to_ns)(dev, timestamp));
+}
+
+int
 rte_eth_read_clock(uint16_t port_id, uint64_t *clock)
 {
 	struct rte_eth_dev *dev;

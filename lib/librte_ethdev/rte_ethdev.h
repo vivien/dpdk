@@ -4104,6 +4104,23 @@ int rte_eth_timesync_read_time(uint16_t port_id, struct timespec *time);
 int rte_eth_timesync_write_time(uint16_t port_id, const struct timespec *time);
 
 /**
+ * Convert a raw clock counter to nanoseconds from device clock
+ *
+ * @param port_id
+ *   The port identifier of the Ethernet device.
+ * @param[in&out] timestamp
+ *   Pointer to the timestamp to be converted.
+ *
+ * @return
+ *   - 0: Success.
+ *   - -ENODEV: The port ID is invalid.
+ *   - -ENOTSUP: The function is not supported by the Ethernet driver.
+ */
+__rte_experimental
+int
+rte_eth_convert_ts_to_ns(uint16_t port_id, uint64_t *timestamp);
+
+/**
  * @warning
  * @b EXPERIMENTAL: this API may change without prior notice.
  *

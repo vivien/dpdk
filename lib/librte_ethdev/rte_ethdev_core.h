@@ -464,6 +464,10 @@ typedef int (*eth_timesync_write_time)(struct rte_eth_dev *dev,
 				       const struct timespec *timestamp);
 /**< @internal Function used to get time from the device clock */
 
+typedef int (*eth_convert_ts_to_ns)(struct rte_eth_dev *dev,
+				      uint64_t *timestamp);
+/**< @internal Function used to convert timestamp from device clock */
+
 typedef int (*eth_read_clock)(struct rte_eth_dev *dev,
 				      uint64_t *timestamp);
 /**< @internal Function used to get the current value of the device clock. */
@@ -730,6 +734,7 @@ struct eth_dev_ops {
 	eth_timesync_read_time     timesync_read_time; /** Get the device clock time. */
 	eth_timesync_write_time    timesync_write_time; /** Set the device clock time. */
 
+	eth_convert_ts_to_ns       convert_ts_to_ns;
 	eth_read_clock             read_clock;
 
 	eth_xstats_get_by_id_t     xstats_get_by_id;
